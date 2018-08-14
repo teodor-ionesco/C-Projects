@@ -1,10 +1,12 @@
 #include "bind.h"
 
-using namespace __LIB;
-
 int main()
 {
-    String alex = "1567890";
+    LIB::String alex = "___initialString";
+    
+    alex = "MEME" + alex;
+    
+    std::cout << alex + "MEME";
     
     int i; std::cin >> i;
     

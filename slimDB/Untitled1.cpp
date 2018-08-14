@@ -1,11 +1,24 @@
 #include "iostream"
 
+class Test
+{
+    static char string[120];
+    
+    public:
+        friend char* accessor(Test object);
+};
+
+char* accessor(Test object)
+{
+    return object.string;
+}
+
 int main()
 {
-    #define __COMMENT(comm) #comm
+    Test testing;
     
-    std::cout << __COMMENT(Some String);
     
+
     int x; std::cin >> x;
     
     return 0;
