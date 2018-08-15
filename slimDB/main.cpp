@@ -4,9 +4,9 @@ int main()
 {
     LIB::String alex = "___initialString";
     
-    alex = "MEME" + alex;
-    
-    std::cout << alex + "MEME";
+    alex = alex + "MEME";
+
+    std::cout << "Meme!" + alex ;
     
     int i; std::cin >> i;
     
