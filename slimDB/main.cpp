@@ -2,11 +2,11 @@
 
 int main()
 {
-    LIB::String alex = "___initialString";
+    LIB::String something = "Some dummy string to test.";
     
-    alex = alex + "MEME";
-
-    std::cout << "Meme!" + alex ;
+    LIB::String::replace("dummy", "__", something);
+    
+    //std::cout << something;
     
     int i; std::cin >> i;
     
