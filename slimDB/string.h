@@ -26,6 +26,30 @@ namespace LIB
             }
         }
         
+        static short int len(const char str[])
+        {
+            short int len = 0;
+            
+            for(short int i = 0; i >= 0; i++)
+            {
+                if(str[i] != '\0')
+                    ++len;
+                else
+                    break;
+            }
+            
+            return ++len;
+        }
+        
+        static void concat(char* str1, char* str2)
+        {
+            int str1_len = String::len(str1);
+            int str2_len = String::len(str2);
+            
+            for(int i = 0; i < str2_len; i++)
+                str1[i+(str1_len-1)] = str2[i];
+        }
+        
         // Clear this -> string
         void _flush()
         {
@@ -42,79 +66,79 @@ namespace LIB
                 for(short int i = 0; i < String::MAX_SIZE; i++)
                     String::tmp_string[i] = 0;
             }
-            
-            /*
-            *
-            *   BAD DESIGN! TRYING WITH MULTIDIMENSIONAL VECTORS TOMORROW.
-            *
-            */
-            static char* replace(const char lookup[], const char replace[], String &object) {
-                short int len_lookup = (object.__getLength(lookup)) - 1;
-                short int len_replace = (object.__getLength(replace)) - 1;
-                short int len_string = object.__getLength(object.string);
- 
-                //if(len_lookup == 1)
-                  //  len_lookup++;
- 
-                char tmp[String::MAX_SIZE];
+
+            static char* replace(const char lookup[], const char replace[], const char string[]) {
+                short int len_lookup = String::len(lookup);
+                short int len_replace = String::len(replace);
+                short int len_string = String::len(string);
+                char tmp[len_string*len_replace][len_replace];
                 
-                short int count = 0;
-                short int rounds = 0;
+                for(short int i = 0; i < len_string*len_replace; i++)
+                {
+                    for(short int j = 0; j < len_replace; j++)
+                        tmp[i][j] = 0;    
+                }
                 
+                short int skip = 0;
                 for(short int i = 0; i < len_string; i++)
                 {
-                    bool repl = false;
-                    short int c = -1;
+                    short int check = 0;
                     
-                    for(short int j = 0; j < len_lookup; j++)
+                    for(short int j = 0; j < (len_lookup - 1); j++)
                     {
-                        if(object.string[i+j] == lookup[j])
-                            ++c;
+                        if(string[j+i] == lookup[j])
+                            ++check;
                         else
-                            --c;
-                            
-                        if(j+1 == len_lookup)
-                        {
-                            if(c == j)
-                                repl = true;
-                            else
-                                repl = false;    
-                        }
+                            --check;
                     }
                     
-                    if(repl == true)
+                    if(check == (len_lookup - 1))
                     {
-                        for(short int j = 0; j < len_replace; j++)
+                        for(short int j = 0; j < (len_replace - 1); j++)
                         {
-                            tmp[i+j] = replace[j];
-                            
-                            if(j == 0)
-                            {
-                                rounds = 0;
-                                count = j;
-                            }
-                            else
-                            {
-                                rounds = len_lookup-1;
-                                count = j-1;
-                            }
+                            tmp[i][j] = replace[j];
+                            skip = (len_lookup - 2);
                         }
                     }
                     else
                     {
-                        if(rounds > 0)
+                        if(skip > 0)
                         {
-                            rounds--;
+                            --skip;
                             continue;
                         }
-                        else
-                        {
-                            tmp[i+count] = object.string[i];
-                        }
-                    }
+                        
+                        tmp[i][0] = string[i]; 
+                    }   
                 }
                 
-                std::cout << tmp;
+                short int count = 0;
+                for(short int i = 0; i < len_string*len_replace; i++)
+                {
+                    if(tmp[i] != 0)
+                    {
+                        for(short int j = 0; j < (len_replace - 1); j++)
+                        {
+                            if(tmp[i][j] != 0)
+                                ++count;
+                            else
+                                continue;
+                        }
+                    }
+                    else
+                        continue;
+                }
+
+                ++count; // For EOL character: 0x0;
+                char *pChar = new char[count];
+                
+                for(short int i = 0; i < count; i++)
+                    pChar[i] = 0;
+                    
+                for(short int i = 0; i < len_string*len_replace; i++)
+                    String::concat(pChar, tmp[i]);
+
+                return pChar;
             }
             
             // str = "1234567..."

@@ -1,67 +1,39 @@
 #include "iostream"
 
-int main()
+short int len(const char* str)
 {
-    char replace[] = "DE";
-    char with[] = "XXXX";
-    char string[] = "ABCDEFGHIJ";
-    char tmp[11];
+    short int length = 0;
     
-    int rounds = 0;
-    int count = 0;
-    
-    for(int i = 0; i < 11; i++)
+    for(short int i = 0; i >= 0; i++)
     {
-        bool repl = false;
-        int c = -1;
-        
-        for(int j = 0; j < 2; j++)
-        {
-            if(string[i+j] == replace[j])
-                ++c;
-            else
-                --c;
-                
-            if(j+1 == 2)
-            {
-                if(c == j)
-                    repl = true;
-                else
-                    repl = false;    
-            }
-            
-             std::cout << string[i+j] << ": " << c <<  '\n';
-        }
-        
-       
-        if(repl == true)
-        {
-            for(int j = 0; j < 4; j++)
-            {
-                tmp[i+j] = with[j];
-                count = j-1;
-                rounds = 1;
-            }
-        }
+        if(str[i] != '\0')
+            ++length;
         else
-        {
-            if(rounds > 0)
-            {
-                rounds--;
-                continue;
-            }
-            else
-            {
-                tmp[i+count] = string[i];    
-            }
-            //count = 0;  
-        }
-        
-        //std::cout << "i:" << i << "repl: ";
-        //std::cout << repl << '\n';
+            break;
     }
     
-    std::cout << tmp;
+    return ++length;
+}
+
+void concat(char* str1, char str2[])
+{
+    int str1_len = len(str1);
+    int str2_len = len(str2);
+    
+    //char *tmp = new char[(str1_len+str2_len)-1];
+    
+    for(int i = 0; i < str2_len; i++)
+        str1[i+(str1_len-1)] = str2[i];
+}
+
+int main()
+{
+    char str1[] = "ss ";
+    char str2[] = "worldz";
+    
+    concat(str1, str2);
+    
+    std::cout << str1;
     
     int x; std::cin >> x;
     

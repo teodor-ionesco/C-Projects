@@ -4,9 +4,9 @@ int main()
 {
     LIB::String something = "Some dummy string to test.";
     
-    LIB::String::replace("dummy", "__", something);
     
-    //std::cout << something;
+    
+    std::cout << LIB::String::replace("dummy", "ordinary", "Some dummy string to test.");
     
     int i; std::cin >> i;
     
