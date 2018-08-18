@@ -71,17 +71,23 @@ namespace LIB
                 short int len_lookup = String::len(lookup);
                 short int len_replace = String::len(replace);
                 short int len_string = String::len(string);
-                char tmp[len_string*len_replace][len_replace];
+                char tmp[len_string*len_replace][len_replace+1];
                 
                 for(short int i = 0; i < len_string*len_replace; i++)
                 {
-                    for(short int j = 0; j < len_replace; j++)
+                    for(short int j = 0; j < (len_replace+1); j++)
                         tmp[i][j] = 0;    
                 }
                 
                 short int skip = 0;
                 for(short int i = 0; i < len_string; i++)
                 {
+                    if(skip > 0)
+                    {
+                        --skip;
+                        continue;
+                    }
+                    
                     short int check = 0;
                     
                     for(short int j = 0; j < (len_lookup - 1); j++)
@@ -90,26 +96,24 @@ namespace LIB
                             ++check;
                         else
                             --check;
+                            
+                        //std::cout << "i: " << i << "; string[" << j << "+" << i << "]; lookup: " << lookup[j] << "; check: " << check << '\n';
                     }
                     
-                    if(check == (len_lookup - 1))
+                    if(check == (len_lookup - 1) && len_lookup > 1)
                     {
-                        for(short int j = 0; j < (len_replace - 1); j++)
+                        if(len_replace > 1)
                         {
-                            tmp[i][j] = replace[j];
-                            skip = (len_lookup - 2);
+                            for(short int j = 0; j < (len_replace - 1); j++)
+                                tmp[i][j] = replace[j];
                         }
+                        else
+                            tmp[i][0] = 0;
+                        
+                        skip = (len_lookup - 2);
                     }
                     else
-                    {
-                        if(skip > 0)
-                        {
-                            --skip;
-                            continue;
-                        }
-                        
-                        tmp[i][0] = string[i]; 
-                    }   
+                        tmp[i][0] = string[i];  
                 }
                 
                 short int count = 0;
@@ -128,7 +132,7 @@ namespace LIB
                     else
                         continue;
                 }
-
+                
                 ++count; // For EOL character: 0x0;
                 char *pChar = new char[count];
                 
@@ -136,7 +140,12 @@ namespace LIB
                     pChar[i] = 0;
                     
                 for(short int i = 0; i < len_string*len_replace; i++)
-                    String::concat(pChar, tmp[i]);
+                {
+                    if(tmp[i] != 0)
+                        String::concat(pChar, tmp[i]);
+                    else
+                        continue;
+                }
 
                 return pChar;
             }
