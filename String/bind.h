@@ -6,3 +6,4 @@
 #include "h/misc.h"
 #include "h/strinit.h"
 #include "h/replace.h"
+#include "h/explode.h"

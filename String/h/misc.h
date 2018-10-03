@@ -28,8 +28,8 @@ namespace String
         int str1_len = Misc::len(str1);
         int str2_len = Misc::len(str2);
         
-        for(int i = 0; i < str2_len; i++)
-            str1[i+(str1_len-1)] = str2[i];
+        //for(int i = 0; i < str2_len; i++)
+        //    str1[i+(str1_len-1)] = str2[i];
     }
 
     void Misc::toNull(char* str) {
