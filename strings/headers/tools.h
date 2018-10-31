@@ -3,12 +3,25 @@
 
 namespace _t 
 {
-	/*
-	 *	Get string's length
-	 */
 	int length(char []);
 	int length(int []);
+	
+	int chr(char);
+	char chr(int);
+	
+	void copy(int [], int []);
+	void copy(char [], char []);
+	void copy(char [], char []);
+	
+	void to_ascii(char [], int []);
+	void to_string(int [], char []);
+	
+	void cout(int []);
+	void cout(char []);
 
+	/*
+	 *	Get string's length
+	 */	
 	int length(char v[])
 	{
 		int length = 0;
@@ -42,8 +55,6 @@ namespace _t
 	
 	/*
 	 *	Convert string to ASCII code
-	 *
-	 *	@return pointer of type 'int'
 	 */
 	void to_ascii(char a[], int b[])
 	{
@@ -51,15 +62,26 @@ namespace _t
 		
 		for(int i = 0; i <= length; i++)
 			b[i] = (int)a[i];
+		
+		return;
+	}
+	
+	/*
+	 *	Convert ASCII code to string
+	 */
+	void to_string(int a[], char b[])
+	{
+		int length = _t::length(a);
+		
+		for(int i = 0; i <= length; i++)
+			b[i] = (char)a[i];
+		
+		return;
 	}
 	
 	/*
 	 *	Copy one ASCII string in another. It can be of type 'int' or 'char'
 	 */
-	void copy(int [], int []);
-	void copy(char [], char []);
-	void copy(char [], char []);
-	
 	void copy(int a[], int b[])
 	{
 		int length = _t::length(a);
@@ -93,10 +115,7 @@ namespace _t
 	
 	/*
 	 *	std::cout << string
-	 */
-	void cout(int []);
-	void cout(char []);
-	
+	 */	
 	void cout(int v[])
 	{
 		int length = _t::length(v);
@@ -117,6 +136,19 @@ namespace _t
 		return;
 	}
 	/* ***************** */
+	
+	/*
+	 *	Swap between char and ASCII code
+	 */
+	int chr(char a)
+	{
+		return (int)a;
+	}
+	
+	char chr(int a)
+	{
+		return (char)a;
+	}
 	
 };
 
