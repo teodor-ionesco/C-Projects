@@ -18,6 +18,9 @@ namespace _t
 	
 	void cout(int []);
 	void cout(char []);
+	
+	void to_zero(char [], int);
+	void to_zero(int [], int);
 
 	/*
 	 *	Get string's length
@@ -74,7 +77,7 @@ namespace _t
 		int length = _t::length(a);
 		
 		for(int i = 0; i <= length; i++)
-			b[i] = (char)a[i];
+			b[i] = a[i];
 		
 		return;
 	}
@@ -87,7 +90,7 @@ namespace _t
 		int length = _t::length(a);
 		
 		for(int i = 0; i <= length; i++)
-			b[i] = a[i];
+			b[i] = (char)a[i];
 		
 		return;
 	}
@@ -148,6 +151,21 @@ namespace _t
 	char chr(int a)
 	{
 		return (char)a;
+	}
+	
+	/*
+	 *	Set all array's items to 0
+	 */
+	void to_zero(char v[], int size)
+	{
+		for(int i = 0; i < size; i++)
+			v[i] = (char)('\0');
+	}
+	
+	void to_zero(int v[], int size)
+	{
+		for(int i = 0; i < size; i++)
+			v[i] = 0;
 	}
 	
 };
